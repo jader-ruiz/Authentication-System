@@ -13,7 +13,7 @@ class Login:
     def button_create(self):
         button = ctk.CTkButton(
             master=self.root,
-            text="Login",
+            text="Register",
             command=self.open_register
         )
         button.pack(pady=20)
