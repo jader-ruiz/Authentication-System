@@ -1,5 +1,7 @@
-import tkinter as tk
+from tkinter import messagebox
+import services.database as db
 import customtkinter as ctk
+import services.auth as auth
 
 class Register:
 
@@ -74,11 +76,48 @@ class Register:
         self.close_button = ctk.CTkButton(master=self.bottom_frame,text="Close",command=self.close_register)
         self.close_button.pack(pady=20)
 
-        self.register_button = ctk.CTkButton(master=self.register_frame,text="Register")
+        self.register_button = ctk.CTkButton(master=self.register_frame,text="Register",command=self.handle_register)
         self.register_button.grid(row=8,column=0)
 
+    def handle_register(self):
+        username = self.username_entry.get().strip()
+        email = self.email_entry.get().strip()
+        password = self.password_entry.get().strip()
+        password_confirm = self.password_confirm_entry.get().strip()
 
+        result = auth.register_user(username, email, password, password_confirm)
+        
+        if result == "empty_fields":
+            messagebox.showwarning(
+                "Missing Information",
+                "Please fill in all fields."
+            )
 
+        elif result == "password_mismatch":
+            messagebox.showwarning(
+                "Passwords Don't Match",
+                "The passwords do not match"
+            )
+
+        elif result == "already_username":
+            messagebox.showwarning(
+                "Already Information",
+                "Username Already Exists"
+            )
+
+        elif result == "already_email":
+            messagebox.showwarning(
+                "Already Information",
+                "Email Already Exists"
+            )
+
+        elif result == "success":
+            messagebox.showinfo(
+                "Registration Complete",
+                "Success"
+            )
+
+        
     def close_register(self):
         self.register.destroy()
         self.login.root.deiconify()

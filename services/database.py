@@ -20,3 +20,36 @@ def create_table():
     conn.commit()
     conn.close()
 
+def insert_user(username, email, password):
+    conn = connect_db()
+    cursor = conn.cursor()
+    cursor.execute("INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
+    (username,email,password)
+    )
+
+    conn.commit()
+    conn.close()
+
+def find_user_by_username(username):
+    conn = connect_db()
+    cursor = conn.cursor()
+    cursor.execute(
+        "SELECT id FROM users WHERE username = ?",
+        (username,)
+    )
+    result = cursor.fetchone()
+    conn.close()
+
+    return result
+
+def find_user_by_email(email):
+    conn = connect_db()
+    cursor = conn.cursor()
+    cursor.execute(
+        "SELECT id FROM users WHERE email = ?",
+        (email,)
+    )
+    result = cursor.fetchone()
+    conn.close()
+
+    return result
