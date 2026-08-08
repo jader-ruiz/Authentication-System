@@ -20,11 +20,11 @@ def create_table():
     conn.commit()
     conn.close()
 
-def insert_user(username, email, password):
+def insert_user(username, email, hash_password):
     conn = connect_db()
     cursor = conn.cursor()
     cursor.execute("INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
-    (username,email,password)
+    (username,email,hash_password)
     )
 
     conn.commit()
