@@ -1,5 +1,4 @@
 from tkinter import messagebox
-import services.database as db
 import customtkinter as ctk
 import services.auth as auth
 
