@@ -13,12 +13,28 @@ def register_user(username, email, password,password_confirm):
         return "already_username"
 
     if db.find_user_by_email(email) is not None:
-            return "already_email"
+        return "already_email"
 
     password_bytes = password.encode("utf-8")
     salt = bcrypt.gensalt()
-    hash_password = bcrypt.hashpw(password_bytes, salt)
+    password_hash = bcrypt.hashpw(password_bytes, salt)
 
-    db.insert_user(username,email,hash_password)
+    db.insert_user(username,email,password_hash)
 
     return "success"
+
+def login_user(username, password):
+    if username == "" or password == "":
+        return "empty_fields"
+
+    user = db.find_user_by_username(username)
+    if user is not None:
+        password_bytes = password.encode("utf-8")
+        result = bcrypt.checkpw( password_bytes , user[2] )
+        if result:
+            return "success"
+        else:
+            return "wrong_password"
+    else:
+        return "user_not_found"
+    

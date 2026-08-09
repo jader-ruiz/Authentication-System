@@ -1,4 +1,6 @@
 import customtkinter as ctk
+import services.auth as auth
+from tkinter import messagebox
 
 class Login:
 
@@ -63,6 +65,37 @@ class Login:
             text="Login",
         )
         self.login_button.grid(column=0,row=6,pady=(0,15))
+
+    def handle_login(self):
+        username = self.username_entry.get().strip()
+        password = self.password_entry.get().strip()
+        
+        result = auth.login_user(username,password)
+
+        if result == "empty_fields":
+            messagebox.showwarning(
+                "Missing Information",
+                "Please fill in all fields."
+            )
+
+        elif result == "user_not_found":
+            messagebox.showwarning(
+                "Information not found",
+                "The user not found"
+            )
+
+        elif result == "wrong_password":
+            messagebox.showwarning(
+                "Information doesn't match",
+                "Invalid username or password"
+            )
+
+        elif result == "success":
+            messagebox.showinfo(
+                "Login success",
+                "Success"
+            )
+            # Here open the other window hehe
 
     def open_register(self):
         self.root.withdraw()
