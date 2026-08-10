@@ -77,7 +77,7 @@ class Dashboard:
             text="Logout",
             command=self.close_dashboard
         )
-        self.logout.pack()
+        self.logout.pack(pady=20)
 
     def close_dashboard(self):
             self.dashboard.destroy()

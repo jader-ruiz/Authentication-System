@@ -64,6 +64,7 @@ class Login:
         self.login_button = ctk.CTkButton(
             master=self.login_frame,
             text="Login",
+            command=self.handle_login
         )
         self.login_button.grid(column=0,row=6,pady=(0,15))
 
