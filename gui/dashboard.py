@@ -2,12 +2,14 @@ import customtkinter as ctk
 
 class Dashboard:
 
-    def __init__(self,login):
+    def __init__(self,login,user):
         self.login = login
         self.dashboard = ctk.CTkToplevel(login.root)
+        self.user = user
         self.interface()
         self.frames()
-        self.c_button()
+        self.widgets()
+        self.caution()
         
 
     def interface(self):
@@ -42,13 +44,13 @@ class Dashboard:
         self.s_title = ctk.CTkLabel(master=self.dashboard_frame,text="Welcome!",font=self.font_label)
         self.s_title.grid(column=0,row=0,pady=(5,10))
 
-        self.username_label = ctk.CTkLabel(master=self.dashboard_frame,text="Username",font=self.font_label)
+        self.username_label = ctk.CTkLabel(master=self.dashboard_frame,text=f"Username: {self.user['username']}",font=self.font_label)
         self.username_label.grid(row=1,column=0,pady=(0,5))
         
-        self.email_label = ctk.CTkLabel(master=self.dashboard_frame,text="Email",font=self.font_label)
+        self.email_label = ctk.CTkLabel(master=self.dashboard_frame,text=f"Email: {self.user['email']}",font=self.font_label)
         self.email_label.grid(row=2,column=0,pady=(0,5))
 
-        self.r_label = ctk.CTkLabel(master=self.dashboard_frame,text="Role",font=self.font_label)
+        self.r_label = ctk.CTkLabel(master=self.dashboard_frame,text=f"Role: {'role'}",font=self.font_label)
         self.r_label.grid(row=3,column=0,pady=(0,25))
 
     def c_button(self):
@@ -62,17 +64,25 @@ class Dashboard:
             master=self.dashboard_frame,
             text="Change Password"
         )
-        self.edit_profile.grid(column=0,row=5,pady=(0,10))
+        self.change_password.grid(column=0,row=5,pady=(0,10))
 
         self.delete_account = ctk.CTkButton(
             master=self.dashboard_frame,
             text="Delete Account"
         )
-        self.edit_profile.grid(column=0,row=6)
+        self.delete_account.grid(column=0,row=6)
 
         self.logout = ctk.CTkButton(
             master=self.bottom_frame,
-            text="Logout"
+            text="Logout",
+            command=self.close_dashboard
         )
         self.logout.pack()
+
+    def close_dashboard(self):
+            self.dashboard.destroy()
+            self.login.root.deiconify()
+
+    def caution(self):
+            self.dashboard.protocol("WM_DELETE_WINDOW", self.close_dashboard)
         

@@ -34,7 +34,7 @@ def find_user_by_username(username):
     conn = connect_db()
     cursor = conn.cursor()
     cursor.execute(
-        "SELECT id, username, password FROM users WHERE username = ?",
+        "SELECT id, username, email, password FROM users WHERE username = ?",
         (username,)
     )
     result = cursor.fetchone()

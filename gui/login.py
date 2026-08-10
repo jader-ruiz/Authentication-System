@@ -1,6 +1,7 @@
 import customtkinter as ctk
 import services.auth as auth
 from tkinter import messagebox
+from gui.dashboard import Dashboard
 
 class Login:
 
@@ -72,30 +73,29 @@ class Login:
         
         result = auth.login_user(username,password)
 
-        if result == "empty_fields":
+        if result["status"] == "empty_fields":
             messagebox.showwarning(
                 "Missing Information",
                 "Please fill in all fields."
-            )
+            )            
 
-        elif result == "user_not_found":
+        elif result["status"] == "user_not_found":
             messagebox.showwarning(
                 "Information not found",
                 "The user not found"
             )
 
-        elif result == "wrong_password":
+
+        elif result["status"] == "wrong_password":
             messagebox.showwarning(
                 "Information doesn't match",
                 "Invalid username or password"
             )
 
-        elif result == "success":
-            messagebox.showinfo(
-                "Login success",
-                "Success"
-            )
-            # Here open the other window hehe
+        elif result["status"] == "success":
+            user = result["user"]
+            self.dashboard = Dashboard(self, user)
+            self.root.withdraw()
 
     def open_register(self):
         self.root.withdraw()

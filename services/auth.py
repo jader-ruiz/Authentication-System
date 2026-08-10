@@ -25,16 +25,32 @@ def register_user(username, email, password,password_confirm):
 
 def login_user(username, password):
     if username == "" or password == "":
-        return "empty_fields"
+        return {
+                "status": "empty_fields",
+                "user": None
+            }
 
     user = db.find_user_by_username(username)
     if user is not None:
         password_bytes = password.encode("utf-8")
-        result = bcrypt.checkpw( password_bytes , user[2] )
+        result = bcrypt.checkpw( password_bytes , user[3] )
         if result:
-            return "success"
+            return {
+                "status": "success",
+                "user": {
+                    "id": user[0],
+                    "username": user[1],
+                    "email": user[2],
+                }
+            }
         else:
-            return "wrong_password"
+            return {
+                "status": "wrong_password",
+                "user": None
+            }
     else:
-        return "user_not_found"
+        return {
+                "status": "user_not_found",
+                "user": None
+            }
     
