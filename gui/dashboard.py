@@ -63,7 +63,8 @@ class Dashboard:
 
         self.change_password = ctk.CTkButton(
             master=self.dashboard_frame,
-            text="Change Password"
+            text="Change Password",
+            command=self.open_change_password
         )
         self.change_password.grid(column=0,row=5,pady=(0,10))
 
@@ -100,4 +101,8 @@ class Dashboard:
         self.email_label.configure(
             text=f"Email: {self.user['email']}"
         )
-        
+
+    def open_change_password(self):
+        self.dashboard.withdraw()
+        from .changepass import ChangePassword
+        ChangePassword(self,self.user)
