@@ -6,13 +6,16 @@ def register_user(username, email, password,password_confirm):
     if username == "" or email == "" or password == "" or password_confirm == "":
         return "empty_fields"
     
-    if password != password_confirm:
+    elif password != password_confirm:
         return "password_mismatch"
 
-    if db.find_user_by_username(username) is not None:
+    elif "@" not in email or "." not in email:
+        return "invalid_email"
+
+    elif db.find_user_by_username(username) is not None:
         return "already_username"
 
-    if db.find_user_by_email(email) is not None:
+    elif db.find_user_by_email(email) is not None:
         return "already_email"
 
     password_bytes = password.encode("utf-8")
@@ -53,4 +56,24 @@ def login_user(username, password):
                 "status": "user_not_found",
                 "user": None
             }
+
+def edit_user(user_id,username, email):
+    if username == "" or email == "":
+        return "empty_fields"
+    
+    elif "@" not in email or "." not in email:
+        return "invalid_email"
+
+    elif db.find_other_user_by_username(username, user_id) is not None:
+        return "already_username"
+
+    elif db.find_other_user_by_email(email, user_id) is not None:
+        return "already_email"
+
+    db.update_user(user_id,username,email)
+
+    return "success"
+
+    
+
     

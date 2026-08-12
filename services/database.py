@@ -53,3 +53,52 @@ def find_user_by_email(email):
     conn.close()
 
     return result
+
+def find_other_user_by_username(username, user_id):
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        SELECT id
+        FROM users
+        WHERE username = ? AND id != ?
+        """,
+        (username, user_id)
+    )
+
+    result = cursor.fetchone()
+    conn.close()
+
+    return result
+
+def find_other_user_by_email(email, user_id):
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        SELECT id
+        FROM users
+        WHERE email = ? AND id != ?
+        """,
+        (email, user_id)
+    )
+
+    result = cursor.fetchone()
+    conn.close()
+
+    return result
+
+def update_user(user_id,username,email):
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        UPDATE users
+        SET username = ?, email = ?
+        WHERE id = ?
+    """, (username, email, user_id))
+
+    conn.commit()
+    conn.close()

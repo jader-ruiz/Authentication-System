@@ -56,7 +56,8 @@ class Dashboard:
     def c_button(self):
         self.edit_profile = ctk.CTkButton(
             master=self.dashboard_frame,
-            text="Edit Profile"
+            text="Edit Profile",
+            command=self.open_edit_profile
         )
         self.edit_profile.grid(column=0,row=4,pady=(0,10))
 
@@ -80,9 +81,23 @@ class Dashboard:
         self.logout.pack(pady=20)
 
     def close_dashboard(self):
-            self.dashboard.destroy()
-            self.login.root.deiconify()
+        self.dashboard.destroy()
+        self.login.root.deiconify()
 
     def caution(self):
-            self.dashboard.protocol("WM_DELETE_WINDOW", self.close_dashboard)
+        self.dashboard.protocol("WM_DELETE_WINDOW", self.close_dashboard)
+
+    def open_edit_profile(self):
+        self.dashboard.withdraw()
+        from .edit_profile import EditProfile
+        EditProfile(self,self.user)
+
+    def update_user_info(self):
+        self.username_label.configure(
+            text=f"Username: {self.user['username']}"
+        )
+
+        self.email_label.configure(
+            text=f"Email: {self.user['email']}"
+        )
         

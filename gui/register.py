@@ -98,6 +98,12 @@ class Register:
                 "The passwords do not match"
             )
 
+        elif result == "invalid_email":
+            messagebox.showwarning(
+                "Error Email",
+                "The format email is invalid"
+            )
+
         elif result == "already_username":
             messagebox.showwarning(
                 "Already Information",
