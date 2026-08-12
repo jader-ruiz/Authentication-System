@@ -109,12 +109,12 @@ class EditProfile:
                 "Update profile"
             )
             
-            self.dashboard.deiconify()
+            self.dashboard.dashboard.deiconify()
             self.edit_profile.destroy()
             
     def close_dashboard(self):
         self.edit_profile.destroy()
-        self.dashboard.deiconify()
+        self.dashboard.dashboard.deiconify()
     
     def caution(self):
         self.edit_profile.protocol("WM_DELETE_WINDOW", self.close_dashboard)
