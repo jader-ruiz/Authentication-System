@@ -70,7 +70,8 @@ class Dashboard:
 
         self.delete_account = ctk.CTkButton(
             master=self.dashboard_frame,
-            text="Delete Account"
+            text="Delete Account",
+            command=self.open_delete_user
         )
         self.delete_account.grid(column=0,row=6)
 
@@ -106,3 +107,8 @@ class Dashboard:
         self.dashboard.withdraw()
         from .changepass import ChangePassword
         ChangePassword(self,self.user)
+
+    def open_delete_user(self):
+        self.dashboard.withdraw()
+        from .delete_user import DeleteUser
+        DeleteUser(self,self.user)

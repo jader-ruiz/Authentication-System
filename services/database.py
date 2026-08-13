@@ -132,3 +132,15 @@ def update_password(user_id,password_hash):
 
     conn.commit()
     conn.close()
+
+def delete_user(user_id):
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        DELETE FROM users
+        WHERE id = ?
+    """, (user_id,))
+
+    conn.commit()
+    conn.close()
