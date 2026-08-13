@@ -74,6 +74,30 @@ def edit_user(user_id,username, email):
 
     return "success"
 
+def change_password(user_id,current_password,new_password,new_password_confirm):
+    if current_password == "" or new_password == "":
+        return "empty_fields"
+    elif new_password != new_password_confirm:
+        return "password_mismatch"
+
+    password_bytes = current_password.encode("utf-8")
+
+    store_password = db.select_password(user_id)
+
+    if not bcrypt.checkpw(password_bytes, store_password[0]):
+        return "incorrect_password"
+    else:
+        password_bytes = new_password.encode("utf-8")
+        salt = bcrypt.gensalt()
+        password_hash = bcrypt.hashpw(password_bytes, salt)
+
+        db.update_password(user_id,password_hash)
+
+        return "success"
+            
+
+
+
     
 
     

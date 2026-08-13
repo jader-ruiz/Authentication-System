@@ -102,3 +102,33 @@ def update_user(user_id,username,email):
 
     conn.commit()
     conn.close()
+
+def select_password(user_id):
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """ 
+        SELECT password
+        FROM users
+        WHERE id = ?
+        """,
+        (user_id,)
+    )
+    result = cursor.fetchone()
+    conn.close()
+
+    return result
+
+def update_password(user_id,password_hash):
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        UPDATE users
+        SET password = ?
+        WHERE id = ?
+    """, (password_hash,user_id))
+
+    conn.commit()
+    conn.close()

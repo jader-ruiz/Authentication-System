@@ -74,6 +74,9 @@ class Login:
         
         result = auth.login_user(username,password)
 
+        self.username_entry.delete(0, ctk.END)
+        self.password_entry.delete(0, ctk.END)
+
         if result["status"] == "empty_fields":
             messagebox.showwarning(
                 "Missing Information",

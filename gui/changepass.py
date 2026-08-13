@@ -1,5 +1,6 @@
 import customtkinter as ctk
 from tkinter import messagebox
+import services.auth as auth
 
 class ChangePassword:
     def __init__(self,dashboard,user):
@@ -12,7 +13,7 @@ class ChangePassword:
         self.caution()
 
     def interface(self):
-        self.change_password.geometry("500x400")
+        self.change_password.geometry("600x500")
         self.change_password.title("Edit Profile")
         self.change_password.resizable(False, False)
 
@@ -37,15 +38,18 @@ class ChangePassword:
     def c_labels(self):
         self.font_main_title = ctk.CTkFont(family='Arial',size=20,weight="bold")
         self.c_password_title = ctk.CTkLabel(master=self.header_frame,text="CHANGE PASSWORD",font=self.font_main_title)
-        self.c_password_title.pack(pady=25)
+        self.c_password_title.pack(pady=15)
 
         self.font_label = ctk.CTkFont(family='Arial',size=12,weight="bold")
 
         self.current_password = ctk.CTkLabel(master=self.c_password_frame,text="Current Password",font=self.font_label)
-        self.current_password.grid(column=0,row=0,pady=(10,0))
+        self.current_password.grid(column=0,row=0)
 
         self.new_password = ctk.CTkLabel(master=self.c_password_frame,text="New Password",font=self.font_label)
         self.new_password.grid(column=0,row=2)
+
+        self.new_password_confirm = ctk.CTkLabel(master=self.c_password_frame,text="New Password Confirm",font=self.font_label)
+        self.new_password_confirm.grid(column=0,row=4)
 
     def c_entry(self):
         self.entry_current_password = ctk.CTkEntry(master=self.c_password_frame,width=300)
@@ -54,12 +58,16 @@ class ChangePassword:
         self.entry_new_password = ctk.CTkEntry(master=self.c_password_frame,width=300)
         self.entry_new_password.grid(column=0,row=3,pady=(0,20))
 
+        self.entry_new_password_confirm = ctk.CTkEntry(master=self.c_password_frame,width=300)
+        self.entry_new_password_confirm.grid(column=0,row=5,pady=(0,20))
+
     def c_button(self):
         self.save_button = ctk.CTkButton(
             master=self.c_password_frame,
-            text="Save"
+            text="Save",
+            command=self.handle_password
         )
-        self.save_button.grid(column=0,row=4,pady=(5,10))
+        self.save_button.grid(column=0,row=6,pady=(5,10))
 
         self.close_button = ctk.CTkButton(
             master=self.bottom_frame,
@@ -69,7 +77,36 @@ class ChangePassword:
         self.close_button.pack(pady=25)
 
     def handle_password(self):
-        pass
+        current_password = self.entry_current_password.get().strip()
+        new_password = self.entry_new_password.get().strip()
+        new_password_confirm = self.entry_new_password_confirm.get().strip()
+
+        result = auth.change_password(self.user["id"],current_password, new_password, new_password_confirm)
+
+        if result == "empty_fields":
+            messagebox.showwarning(
+                "Missing Information",
+                "Please fill in all fields."
+            )
+        elif result == "password_mismatch":
+            messagebox.showwarning(
+                "Incorrect information",
+                "The passowrds not match"
+            )
+        elif result == "incorrect_password":
+            messagebox.showwarning(
+                "Incorrect information",
+                "The password is incorrect"
+            )
+        elif result == "success":
+            messagebox.showinfo(
+                "Success",
+                "The password is changed"
+            )
+
+        self.dashboard.dashboard.deiconify()
+        self.change_password.destroy()
+
 
     def close_dashboard(self):
         self.change_password.destroy()
