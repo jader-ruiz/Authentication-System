@@ -96,7 +96,9 @@ def change_password(user_id,current_password,new_password,new_password_confirm):
         return "success"
 
 def delete_user(user_id):
-    pass
+    db.delete_user(user_id)
+
+    return "success"
             
 
 

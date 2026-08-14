@@ -1,5 +1,6 @@
 import customtkinter as ctk
 from tkinter import messagebox
+import services.auth as auth
 
 class DeleteUser:
 
@@ -59,7 +60,16 @@ class DeleteUser:
         self.no_button.pack(side="left")
 
     def yes_button_c(self):
-        pass
+        result = auth.delete_user(self.user["id"])
+
+        if result == "success":
+            messagebox.showinfo(
+                "Success",
+                "The user has been delete"
+            )
+        self.delete_user.destroy()
+        self.dashboard.dashboard.destroy()
+        self.dashboard.login.root.deiconify()
 
     def no_button_c(self):
         self.dashboard.dashboard.deiconify()
