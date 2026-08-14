@@ -122,6 +122,8 @@ class Register:
                 "Success"
             )
 
+        self.register.destroy()
+
         
     def close_register(self):
         self.register.destroy()

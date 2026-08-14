@@ -102,6 +102,8 @@ class Login:
             self.root.withdraw()
 
     def open_register(self):
+        self.username_entry.delete(0, ctk.END)
+        self.password_entry.delete(0, ctk.END)
         self.root.withdraw()
         from .register import Register
         Register(self)
