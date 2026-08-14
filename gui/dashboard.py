@@ -69,6 +69,17 @@ class Dashboard:
         )
         self.change_password.grid(column=0,row=5,pady=(0,10))
 
+        '''from services.database import update_role
+        self.elpepe = ctk.CTkButton(
+            master=self.dashboard_frame,
+            text="Change Role",
+            command=lambda: update_role(self.user["id"])
+        )
+        self.elpepe.grid(
+            row=7,
+            column=0
+        )''' # jeje
+
         self.delete_account = ctk.CTkButton(
             master=self.dashboard_frame,
             text="Delete Account",
@@ -116,6 +127,20 @@ class Dashboard:
 
     def check_role(self):
         if self.user["role"] == "Admin":
-            pass
+            self.manage_button = ctk.CTkButton(
+                master=self.dashboard_frame,
+                text="Manage Users",
+                command=self.open_manage_users
+            )
+            self.manage_button.grid(
+                column=0,
+                row=7,
+                pady=(20,0)
+            )
         else:
             pass
+
+    def open_manage_users(self):
+        self.dashboard.withdraw()
+        from .manage_users import ManageUsers
+        ManageUsers(self,self.user)
