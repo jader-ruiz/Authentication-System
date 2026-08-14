@@ -50,7 +50,7 @@ class Dashboard:
         self.email_label = ctk.CTkLabel(master=self.dashboard_frame,text=f"Email: {self.user['email']}",font=self.font_label)
         self.email_label.grid(row=2,column=0,pady=(0,5))
 
-        self.r_label = ctk.CTkLabel(master=self.dashboard_frame,text=f"Role: {'role'}",font=self.font_label)
+        self.r_label = ctk.CTkLabel(master=self.dashboard_frame,text=f"Role: {self.user['role']}",font=self.font_label)
         self.r_label.grid(row=3,column=0,pady=(0,25))
 
     def c_button(self):
