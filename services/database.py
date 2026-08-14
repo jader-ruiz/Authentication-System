@@ -20,6 +20,18 @@ def create_table():
     conn.commit()
     conn.close()
 
+'''def add_role_column():
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        ALTER TABLE users
+        ADD COLUMN role TEXT NOT NULL DEFAULT 'User'
+    """)
+
+    conn.commit()
+    conn.close()'''
+
 def insert_user(username, email, hash_password):
     conn = connect_db()
     cursor = conn.cursor()
