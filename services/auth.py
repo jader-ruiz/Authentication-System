@@ -100,6 +100,9 @@ def delete_user(user_id):
     db.delete_user(user_id)
 
     return "success"
+
+def get_all_users():
+    return db.get_all_users()
             
 
 

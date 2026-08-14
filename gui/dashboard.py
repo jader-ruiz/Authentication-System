@@ -10,6 +10,7 @@ class Dashboard:
         self.frames()
         self.widgets()
         self.caution()
+        self.check_role()
         
 
     def interface(self):
@@ -112,3 +113,9 @@ class Dashboard:
         self.dashboard.withdraw()
         from .delete_user import DeleteUser
         DeleteUser(self,self.user)
+
+    def check_role(self):
+        if self.user["role"] == "Admin":
+            pass
+        else:
+            pass

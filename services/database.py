@@ -158,3 +158,17 @@ def delete_user(user_id):
 
     conn.commit()
     conn.close()
+
+def get_all_users():
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT id, username, email, role
+        FROM users
+    """)
+
+    users = cursor.fetchall()
+    conn.close()
+
+    return users
