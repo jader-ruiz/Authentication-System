@@ -35,8 +35,10 @@ def create_table():
 def insert_user(username, email, hash_password):
     conn = connect_db()
     cursor = conn.cursor()
-    cursor.execute("INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
-    (username,email,hash_password)
+    cursor.execute("""INSERT INTO users (username, email, password, role) 
+        VALUES (?, ?, ?, ?)
+    """,
+        (username,email,hash_password,"User")
     )
 
     conn.commit()
