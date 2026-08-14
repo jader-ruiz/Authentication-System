@@ -44,6 +44,7 @@ def login_user(username, password):
                     "id": user[0],
                     "username": user[1],
                     "email": user[2],
+                    "role": user[4]
                 }
             }
         else:
