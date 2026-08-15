@@ -33,14 +33,21 @@ class ManageUsers:
         )
         self.search_frame.pack(pady=10)
 
-        self.users_frame = ctk.CTkFrame(
+        self.frame_users = ctk.CTkFrame(
             master=self.manage_window
         )
-        self.users_frame.pack(
+        self.frame_users.pack(
             fill="both",
             expand=True,
             padx=20,
             pady=5
+        )
+
+        self.users_frame = ctk.CTkFrame(
+            master=self.frame_users
+        )
+        self.users_frame.pack(
+            pady=(10,0)
         )
 
         self.actions_frame = ctk.CTkFrame(
@@ -100,11 +107,49 @@ class ManageUsers:
 
     def create_users_area(self):
 
-        self.users_title = ctk.CTkLabel(
+        self.id_header = ctk.CTkLabel(
             master=self.users_frame,
-            text="Users"
+            text="ID"
         )
-        self.users_title.pack(pady=10)
+        self.id_header.grid(
+            row=0,
+            column=0,
+            padx=20,
+            pady=10
+        )
+
+        self.username_header = ctk.CTkLabel(
+            master=self.users_frame,
+            text="USERNAME"
+        )
+        self.username_header.grid(
+            row=0,
+            column=1,
+            padx=20,
+            pady=10
+        )
+
+        self.email_header = ctk.CTkLabel(
+            master=self.users_frame,
+            text="EMAIL"
+        )
+        self.email_header.grid(
+            row=0,
+            column=2,
+            padx=20,
+            pady=10
+        )
+
+        self.role_header = ctk.CTkLabel(
+            master=self.users_frame,
+            text="ROLE"
+        )
+        self.role_header.grid(
+            row=0,
+            column=3,
+            padx=20,
+            pady=10
+        )
 
     def create_actions(self):
 
@@ -144,6 +189,10 @@ class ManageUsers:
         )
 
         self.back_button.pack(pady=10)
+
+    def display_users(self):
+
+        pass
 
     def close_dashboard(self):
         self.manage_window.destroy()
