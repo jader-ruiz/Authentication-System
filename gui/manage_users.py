@@ -71,6 +71,8 @@ class ManageUsers:
         self.create_actions()
         self.create_bottom()
 
+        self.display_users()
+
     def create_labels(self):
 
         self.title_font = ctk.CTkFont(
@@ -192,7 +194,38 @@ class ManageUsers:
 
     def display_users(self):
 
-        pass
+        users = auth.get_all_users()
+
+        for row, user in enumerate(users, start=1):
+
+            user_id = user[0]
+            username = user[1]
+            email = user[2]
+            role = user[3]
+
+            id_label = ctk.CTkLabel(
+                master=self.users_frame,
+                text=str(user_id)
+            )
+            id_label.grid(row=row, column=0, padx=10, pady=5)
+
+            username_label = ctk.CTkLabel(
+                master=self.users_frame,
+                text=username
+            )
+            username_label.grid(row=row, column=1, padx=10, pady=5)
+
+            email_label = ctk.CTkLabel(
+                master=self.users_frame,
+                text=email
+            )
+            email_label.grid(row=row, column=2, padx=10, pady=5)
+
+            role_label = ctk.CTkLabel(
+                master=self.users_frame,
+                text=role
+            )
+            role_label.grid(row=row, column=3, padx=10, pady=5)
 
     def close_dashboard(self):
         self.manage_window.destroy()
