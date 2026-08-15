@@ -12,20 +12,138 @@ class ManageUsers:
         self.manage_window.title("Manage Users")
         self.manage_window.geometry("700x500")
 
-        self.create_widgets()
+        self.frames()
+        self.widgets()
         self.caution()
 
-    def create_widgets(self):
-        self.title_label = ctk.CTkLabel(
-            master=self.manage_window,
-            text="MANAGE USERS"
+    def frames(self):
+        
+        self.header_frame = ctk.CTkFrame(
+            master=self.manage_window
         )
-        self.title_label.pack(pady=20)
+        self.header_frame.pack(fill="x")
 
-        users = auth.get_all_users()
+        self.frame_search = ctk.CTkFrame(
+            master=self.manage_window
+        )
+        self.frame_search.pack(fill="x")
 
-        for user in users:
-            print(user)
+        self.search_frame = ctk.CTkFrame(
+            master=self.frame_search
+        )
+        self.search_frame.pack(pady=10)
+
+        self.users_frame = ctk.CTkFrame(
+            master=self.manage_window
+        )
+        self.users_frame.pack(
+            fill="both",
+            expand=True,
+            padx=20,
+            pady=5
+        )
+
+        self.actions_frame = ctk.CTkFrame(
+            master=self.manage_window
+        )
+        self.actions_frame.pack(
+            fill="x",
+            padx=20,
+            pady=15
+        )
+
+        self.bottom_frame = ctk.CTkFrame(
+            master=self.manage_window
+        )
+        self.bottom_frame.pack(fill="x")
+
+    def widgets(self):
+        self.create_labels()
+        self.create_search()
+        self.create_users_area()
+        self.create_actions()
+        self.create_bottom()
+
+    def create_labels(self):
+
+        self.title_font = ctk.CTkFont(
+            family="Arial",
+            size=20,
+            weight="bold"
+        )
+
+        self.title_label = ctk.CTkLabel(
+            master=self.header_frame,
+            text="MANAGE USERS",
+            font=self.title_font
+        )
+
+        self.title_label.pack(pady=15)
+
+    def create_search(self):
+
+        self.search_entry = ctk.CTkEntry(
+            master=self.search_frame,
+            width=300,
+            placeholder_text="Search username..."
+        )
+        self.search_entry.pack(
+            side="left",
+            padx=(0, 10)
+        )
+
+        self.search_button = ctk.CTkButton(
+            master=self.search_frame,
+            text="Search"
+        )
+        self.search_button.pack(side="left")
+
+    def create_users_area(self):
+
+        self.users_title = ctk.CTkLabel(
+            master=self.users_frame,
+            text="Users"
+        )
+        self.users_title.pack(pady=10)
+
+    def create_actions(self):
+
+        self.selected_user_label = ctk.CTkLabel(
+            master=self.actions_frame,
+            text="No user selected"
+        )
+        self.selected_user_label.pack(
+            side="left",
+            padx=10
+        )
+
+        self.change_role_button = ctk.CTkButton(
+            master=self.actions_frame,
+            text="Change Role"
+        )
+        self.change_role_button.pack(
+            side="right",
+            padx=5
+        )
+
+        self.delete_user_button = ctk.CTkButton(
+            master=self.actions_frame,
+            text="Delete User"
+        )
+        self.delete_user_button.pack(
+            side="right",
+            padx=5
+        )
+
+    def create_bottom(self):
+
+        self.back_button = ctk.CTkButton(
+            master=self.bottom_frame,
+            text="Back",
+            command=self.close_dashboard
+        )
+
+        self.back_button.pack(pady=10)
 
     def close_dashboard(self):
         self.manage_window.destroy()
