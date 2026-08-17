@@ -18,7 +18,6 @@ class ManageUsers:
         self.caution()
 
     def frames(self):
-        
         self.header_frame = ctk.CTkFrame(
             master=self.manage_window
         )
@@ -48,7 +47,7 @@ class ManageUsers:
             master=self.frame_users
         )
         self.users_frame.pack(
-            pady=(10,0)
+            pady=(10, 0)
         )
 
         self.actions_frame = ctk.CTkFrame(
@@ -72,11 +71,10 @@ class ManageUsers:
         self.create_actions()
         self.create_bottom()
 
-        self.display_users()
         self.selected_user = None
+        self.display_users()
 
     def create_labels(self):
-
         self.title_font = ctk.CTkFont(
             family="Arial",
             size=20,
@@ -88,11 +86,9 @@ class ManageUsers:
             text="MANAGE USERS",
             font=self.title_font
         )
-
         self.title_label.pack(pady=15)
 
     def create_search(self):
-
         self.search_entry = ctk.CTkEntry(
             master=self.search_frame,
             width=300,
@@ -110,10 +106,10 @@ class ManageUsers:
         self.search_button.pack(side="left")
 
     def create_users_area(self):
-
         self.id_header = ctk.CTkLabel(
             master=self.users_frame,
-            text="ID"
+            text="ID",
+            font=ctk.CTkFont(weight="bold")
         )
         self.id_header.grid(
             row=0,
@@ -124,7 +120,8 @@ class ManageUsers:
 
         self.username_header = ctk.CTkLabel(
             master=self.users_frame,
-            text="USERNAME"
+            text="USERNAME",
+            font=ctk.CTkFont(weight="bold")
         )
         self.username_header.grid(
             row=0,
@@ -135,7 +132,8 @@ class ManageUsers:
 
         self.email_header = ctk.CTkLabel(
             master=self.users_frame,
-            text="EMAIL"
+            text="EMAIL",
+            font=ctk.CTkFont(weight="bold")
         )
         self.email_header.grid(
             row=0,
@@ -146,7 +144,8 @@ class ManageUsers:
 
         self.role_header = ctk.CTkLabel(
             master=self.users_frame,
-            text="ROLE"
+            text="ROLE",
+            font=ctk.CTkFont(weight="bold")
         )
         self.role_header.grid(
             row=0,
@@ -156,7 +155,6 @@ class ManageUsers:
         )
 
     def create_actions(self):
-
         self.selected_user_label = ctk.CTkLabel(
             master=self.actions_frame,
             text="No user selected"
@@ -187,21 +185,28 @@ class ManageUsers:
         )
 
     def create_bottom(self):
-
         self.back_button = ctk.CTkButton(
             master=self.bottom_frame,
             text="Back",
             command=self.close_dashboard
         )
-
         self.back_button.pack(pady=10)
 
+    def clear_users_grid(self):
+        for widget in self.users_frame.winfo_children():
+            info = widget.grid_info()
+            if info.get("row", 0) > 0:
+                widget.destroy()
+
     def display_users(self):
+        self.clear_users_grid()
+
+        self.selected_user = None
+        self.selected_user_label.configure(text="No user selected")
 
         users = auth.get_all_users()
 
         for row, user in enumerate(users, start=1):
-
             user_id = user[0]
             username = user[1]
             email = user[2]
@@ -237,14 +242,12 @@ class ManageUsers:
             role_label.grid(row=row, column=3, padx=10, pady=5)
 
     def select_user(self, user):
-
         self.selected_user = user
         self.selected_user_label.configure(
             text=f"Selected: {user[1]}"
         )
 
     def open_change_role(self):
-
         if self.selected_user is None:
             messagebox.showwarning(
                 "No User Selected",
@@ -257,7 +260,6 @@ class ManageUsers:
         ChangeRole(self, self.selected_user)
 
     def open_delete_button(self):
-
         if self.selected_user is None:
             messagebox.showwarning(
                 "No User Selected",
@@ -275,10 +277,11 @@ class ManageUsers:
 
     def after_user_delete(self):
         self.manage_window.deiconify()
+        self.display_users()
 
     def close_dashboard(self):
         self.manage_window.destroy()
         self.parent.dashboard.deiconify()
-    
+
     def caution(self):
         self.manage_window.protocol("WM_DELETE_WINDOW", self.close_dashboard)
