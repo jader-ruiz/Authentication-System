@@ -4,10 +4,12 @@ import services.auth as auth
 
 class DeleteUser:
 
-    def __init__(self,dashboard,user):
-        self.dashboard = dashboard
-        self.delete_user = ctk.CTkToplevel(dashboard.dashboard)
+    def __init__(self, parent_window, user):
+        self.parent_window = parent_window
         self.user = user
+
+        self.delete_user = ctk.CTkToplevel(parent_window)
+        
         self.interface()
         self.frames()
         self.widgets()
@@ -72,12 +74,12 @@ class DeleteUser:
         self.dashboard.login.root.deiconify()
 
     def no_button_c(self):
-        self.dashboard.dashboard.deiconify()
+        self.parent_window.deiconify()
         self.delete_user.destroy()
 
     def close_dashboard(self):
         self.delete_user.destroy()
-        self.dashboard.dashboard.deiconify()
+        self.parent_window.deiconify()
     
     def caution(self):
         self.delete_user.protocol("WM_DELETE_WINDOW", self.close_dashboard)

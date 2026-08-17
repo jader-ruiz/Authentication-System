@@ -123,7 +123,7 @@ class Dashboard:
     def open_delete_user(self):
         self.dashboard.withdraw()
         from .delete_user import DeleteUser
-        DeleteUser(self,self.user)
+        DeleteUser(self.dashboard,self.user)
 
     def check_role(self):
         if self.user["role"] == "Admin":

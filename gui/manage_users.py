@@ -178,7 +178,8 @@ class ManageUsers:
 
         self.delete_user_button = ctk.CTkButton(
             master=self.actions_frame,
-            text="Delete User"
+            text="Delete User",
+            command=self.open_delete_button
         )
         self.delete_user_button.pack(
             side="right",
@@ -255,6 +256,21 @@ class ManageUsers:
         from .ChangeRole import ChangeRole
         ChangeRole(self, self.selected_user)
 
+    def open_delete_button(self):
+
+        if self.selected_user is None:
+            messagebox.showwarning(
+                "No User Selected",
+                "Please select a user first."
+            )
+            return
+
+        self.manage_window.withdraw()
+        from .delete_user import DeleteUser
+        DeleteUser(
+            self.manage_window,
+            self.selected_user
+        )
 
     def close_dashboard(self):
         self.manage_window.destroy()

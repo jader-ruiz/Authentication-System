@@ -169,7 +169,7 @@ class ChangeRole:
         )
 
     def save_button(self):
-        pass
+        
         user_id = self.user[0]
         new_role = self.role_menu.get()
 
