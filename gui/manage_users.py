@@ -255,7 +255,6 @@ class ManageUsers:
         from .ChangeRole import ChangeRole
         ChangeRole(self, self.selected_user)
 
-        
 
     def close_dashboard(self):
         self.manage_window.destroy()

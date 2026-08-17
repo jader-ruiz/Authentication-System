@@ -158,7 +158,8 @@ class ChangeRole:
 
         self.save_button = ctk.CTkButton(
             master=self.bottom_frame,
-            text="Save"
+            text="Save",
+            command=self.save_button
         )
 
         self.save_button.pack(
@@ -166,6 +167,20 @@ class ChangeRole:
             expand=True,
             padx=5
         )
+
+    def save_button(self):
+        pass
+        user_id = self.user[0]
+        new_role = self.role_menu.get()
+
+        result = auth.update_role(user_id,new_role)
+
+        if result == "success":
+            messagebox.showinfo(
+                "Success",
+                "The role is changed"
+            )
+        self.close_dashboard()
 
     def close_dashboard(self):
         self.change_role.destroy()

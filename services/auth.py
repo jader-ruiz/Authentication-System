@@ -103,6 +103,11 @@ def delete_user(user_id):
 
 def get_all_users():
     return db.get_all_users()
+
+def update_role(user_id,new_role):
+    db.update_role(user_id,new_role)
+
+    return "success"
             
 
 

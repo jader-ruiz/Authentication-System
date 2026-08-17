@@ -147,7 +147,7 @@ def update_password(user_id,password_hash):
     conn.commit()
     conn.close()
 
-def update_role(user_id):
+def update_role(user_id,new_role):
     conn = connect_db()
     cursor = conn.cursor()
 
@@ -155,7 +155,7 @@ def update_role(user_id):
         UPDATE users
         SET role = ?
         WHERE id = ?
-    """, ("Admin",user_id))
+    """, (new_role,user_id))
 
     conn.commit()
     conn.close()
