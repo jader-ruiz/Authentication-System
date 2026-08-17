@@ -269,7 +269,7 @@ class ManageUsers:
         from .delete_user import DeleteUser
         DeleteUser(
             self.manage_window,
-            self.selected_user
+            self.user
         )
 
     def close_dashboard(self):

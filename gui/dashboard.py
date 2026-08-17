@@ -94,13 +94,6 @@ class Dashboard:
         )
         self.logout.pack(pady=20)
 
-    def close_dashboard(self):
-        self.dashboard.destroy()
-        self.login.root.deiconify()
-
-    def caution(self):
-        self.dashboard.protocol("WM_DELETE_WINDOW", self.close_dashboard)
-
     def open_edit_profile(self):
         self.dashboard.withdraw()
         from .edit_profile import EditProfile
@@ -144,3 +137,10 @@ class Dashboard:
         self.dashboard.withdraw()
         from .manage_users import ManageUsers
         ManageUsers(self,self.user)
+
+    def close_dashboard(self):
+        self.dashboard.destroy()
+        self.login.root.deiconify()
+
+    def caution(self):
+        self.dashboard.protocol("WM_DELETE_WINDOW", self.close_dashboard)
