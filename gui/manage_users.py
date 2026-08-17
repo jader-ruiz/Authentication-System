@@ -1,5 +1,6 @@
 import customtkinter as ctk
 import services.auth as auth
+from tkinter import messagebox
 
 
 class ManageUsers:
@@ -72,6 +73,7 @@ class ManageUsers:
         self.create_bottom()
 
         self.display_users()
+        self.selected_user = None
 
     def create_labels(self):
 
@@ -205,7 +207,8 @@ class ManageUsers:
 
             id_label = ctk.CTkLabel(
                 master=self.users_frame,
-                text=str(user_id)
+                text=str(user_id),
+                cursor="hand2"
             )
             id_label.grid(row=row, column=0, padx=10, pady=5)
 
@@ -214,6 +217,10 @@ class ManageUsers:
                 text=username
             )
             username_label.grid(row=row, column=1, padx=10, pady=5)
+            username_label.bind(
+                "<Button-1>",
+                lambda event, u=user: self.select_user(u)
+            )
 
             email_label = ctk.CTkLabel(
                 master=self.users_frame,
@@ -226,6 +233,13 @@ class ManageUsers:
                 text=role
             )
             role_label.grid(row=row, column=3, padx=10, pady=5)
+
+    def select_user(self, user):
+
+        self.selected_user = user
+        self.selected_user_label.configure(
+            text=f"Selected: {user[1]}"
+        )
 
     def close_dashboard(self):
         self.manage_window.destroy()
