@@ -4,9 +4,10 @@ import services.auth as auth
 
 class DeleteUser:
 
-    def __init__(self, parent_window, user):
+    def __init__(self, parent_window, user,on_success=None):
         self.parent_window = parent_window
         self.user = user
+        self.on_success = on_success
 
         self.delete_user = ctk.CTkToplevel(parent_window)
         
@@ -62,7 +63,8 @@ class DeleteUser:
         self.no_button.pack(side="left")
 
     def yes_button_c(self):
-        result = auth.delete_user(self.user["id"])
+        user_id = self.user[0]
+        result = auth.delete_user(user_id)
 
         if result == "success":
             messagebox.showinfo(
@@ -70,8 +72,9 @@ class DeleteUser:
                 "The user has been delete"
             )
         self.delete_user.destroy()
-        self.dashboard.dashboard.destroy()
-        self.dashboard.login.root.deiconify()
+        
+        if self.on_success:
+            self.on_success()
 
     def no_button_c(self):
         self.parent_window.deiconify()

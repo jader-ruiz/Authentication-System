@@ -116,7 +116,7 @@ class Dashboard:
     def open_delete_user(self):
         self.dashboard.withdraw()
         from .delete_user import DeleteUser
-        DeleteUser(self.dashboard,self.user)
+        DeleteUser(self.dashboard,self.user,on_success=self.after_self_delete)
 
     def check_role(self):
         if self.user["role"] == "Admin":
@@ -137,6 +137,10 @@ class Dashboard:
         self.dashboard.withdraw()
         from .manage_users import ManageUsers
         ManageUsers(self,self.user)
+
+    def after_self_delete(self):
+        self.dashboard.destroy()
+        self.login.root.deiconify()
 
     def close_dashboard(self):
         self.dashboard.destroy()

@@ -269,8 +269,12 @@ class ManageUsers:
         from .delete_user import DeleteUser
         DeleteUser(
             self.manage_window,
-            self.user
+            user=self.selected_user,
+            on_success=self.after_user_delete
         )
+
+    def after_user_delete(self):
+        self.manage_window.deiconify()
 
     def close_dashboard(self):
         self.manage_window.destroy()
