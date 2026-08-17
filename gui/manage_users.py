@@ -168,7 +168,8 @@ class ManageUsers:
 
         self.change_role_button = ctk.CTkButton(
             master=self.actions_frame,
-            text="Change Role"
+            text="Change Role",
+            command=self.open_change_role
         )
         self.change_role_button.pack(
             side="right",
@@ -207,14 +208,14 @@ class ManageUsers:
 
             id_label = ctk.CTkLabel(
                 master=self.users_frame,
-                text=str(user_id),
-                cursor="hand2"
+                text=str(user_id)
             )
             id_label.grid(row=row, column=0, padx=10, pady=5)
 
             username_label = ctk.CTkLabel(
                 master=self.users_frame,
-                text=username
+                text=username,
+                cursor="hand2"
             )
             username_label.grid(row=row, column=1, padx=10, pady=5)
             username_label.bind(
@@ -240,6 +241,21 @@ class ManageUsers:
         self.selected_user_label.configure(
             text=f"Selected: {user[1]}"
         )
+
+    def open_change_role(self):
+
+        if self.selected_user is None:
+            messagebox.showwarning(
+                "No User Selected",
+                "Please select a user first."
+            )
+            return
+
+        self.manage_window.withdraw()
+        from .ChangeRole import ChangeRole
+        ChangeRole(self, self.selected_user)
+
+        
 
     def close_dashboard(self):
         self.manage_window.destroy()
