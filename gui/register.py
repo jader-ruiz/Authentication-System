@@ -123,6 +123,7 @@ class Register:
             )
 
         self.register.destroy()
+        self.login.root.deiconify()
 
         
     def close_register(self):
