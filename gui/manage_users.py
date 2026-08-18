@@ -284,6 +284,7 @@ class ManageUsers:
 
     def handle_search(self):
         username = self.search_entry.get().strip()
+
         result = auth.find_user(username)
 
         if result == "empty_field":
@@ -291,18 +292,25 @@ class ManageUsers:
                 "Warning",
                 "Complete the field"
             )
+            return
 
-        elif result == "not_find":
+        if result["status"] == "not_found":
             messagebox.showinfo(
                 "INFO",
-                "Not found the user"
+                "User not found"
             )
+            return
 
-        elif result == "Success":
+        if result["status"] == "success":
+
+            user = result["user"]
+
             messagebox.showinfo(
                 "Success",
-                f'The user {username} has been found'
+                f"The user {user[1]} has been found"
             )
+
+            self.select_user(user)
                     
     def close_dashboard(self):
         self.manage_window.destroy()

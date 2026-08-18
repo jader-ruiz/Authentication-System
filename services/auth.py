@@ -36,7 +36,7 @@ def login_user(username, password):
     user = db.find_user_by_username(username)
     if user is not None:
         password_bytes = password.encode("utf-8")
-        result = bcrypt.checkpw( password_bytes , user[3] )
+        result = bcrypt.checkpw( password_bytes , user[4] )
         if result:
             return {
                 "status": "success",
@@ -44,7 +44,7 @@ def login_user(username, password):
                     "id": user[0],
                     "username": user[1],
                     "email": user[2],
-                    "role": user[4]
+                    "role": user[3]
                 }
             }
         else:
@@ -116,6 +116,12 @@ def find_user(username):
     result = db.find_user_by_username(username)
 
     if result is not None:
-        return "Success"
+        return {
+            "status": "success",
+            "user": result
+        }
     else:
-        return "not_find"
+        return {
+            "status": "not_found",
+            "user": None
+        }
