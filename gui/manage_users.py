@@ -98,10 +98,12 @@ class ManageUsers:
             side="left",
             padx=(0, 10)
         )
+        self.search_entry.bind("<Return>", lambda event: self.handle_search())
 
         self.search_button = ctk.CTkButton(
             master=self.search_frame,
-            text="Search"
+            text="Search",
+            command=self.handle_search
         )
         self.search_button.pack(side="left")
 
@@ -279,6 +281,29 @@ class ManageUsers:
         self.manage_window.deiconify()
         self.display_users()
 
+
+    def handle_search(self):
+        username = self.search_entry.get().strip()
+        result = auth.find_user(username)
+
+        if result == "empty_field":
+            messagebox.showwarning(
+                "Warning",
+                "Complete the field"
+            )
+
+        elif result == "not_find":
+            messagebox.showinfo(
+                "INFO",
+                "Not found the user"
+            )
+
+        elif result == "Success":
+            messagebox.showinfo(
+                "Success",
+                f'The user {username} has been found'
+            )
+                    
     def close_dashboard(self):
         self.manage_window.destroy()
         self.parent.dashboard.deiconify()

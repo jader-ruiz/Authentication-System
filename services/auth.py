@@ -108,10 +108,14 @@ def update_role(user_id,new_role):
     db.update_role(user_id,new_role)
 
     return "success"
-            
 
+def find_user(username):
+    if username == "":
+        return "empty_field"
 
+    result = db.find_user_by_username(username)
 
-    
-
-    
+    if result is not None:
+        return "Success"
+    else:
+        return "not_find"
