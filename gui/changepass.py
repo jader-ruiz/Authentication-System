@@ -14,7 +14,7 @@ class ChangePassword:
 
     def interface(self):
         self.change_password.geometry("600x500")
-        self.change_password.title("Edit Profile")
+        self.change_password.title("Change Password")
         self.change_password.resizable(False, False)
 
     def frames(self):
